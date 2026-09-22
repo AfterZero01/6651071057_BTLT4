@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUÂN — Senior Web Developer & Designer Journal</title>
+
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- CẤU HÌNH MÀU SẮC & BIẾN GLOBAL --- */
+        :root {
+            --bg-dark: #0B0E14;
+            --bg-card: #121824;
+            --bg-card-hover: #1A2234;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #F3E5AB;
+            --accent-gold-glow: rgba(212, 175, 55, 0.25);
+            --text-primary: #F0F4F8;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --border-gold: rgba(212, 175, 55, 0.3);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --font-heading: 'Cinzel', serif;
+            --font-subheading: 'Cormorant Garamond', serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(18, 24, 36, 0.5) 0%, transparent 50%);
+        }
+
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-gold);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-gold);
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(11, 14, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 40px;
+            height: 40px;
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
+
+        .logo-text h1 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+        }
+
+        .logo-text span {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            display: block;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-gold);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--accent-gold);
+            transition: 0.3s;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        .nav-btn {
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--accent-gold-glow);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 180px 8% 100px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 60px;
+            min-height: 90vh;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid var(--border-gold);
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 50%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-subheading);
+            font-size: 1.5rem;
+            color: var(--accent-gold-light);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .hero-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%);
+            color: #0B0E14;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--accent-gold-glow);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        /* Hero Avatar Frame */
+        .hero-avatar-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .avatar-frame {
+            width: 320px;
+            height: 420px;
+            border-radius: 20px;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            border: 1px solid var(--border-gold);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(110%);
+            transition: 0.5s;
+        }
+
+        .avatar-frame:hover img {
+            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.03);
+        }
+
+        .avatar-glow {
+            position: absolute;
+            width: 340px;
+            height: 440px;
+            border: 1px solid var(--accent-gold);
+            border-radius: 24px;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            opacity: 0.5;
+            animation: pulseGlow 4s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.3; transform: translateX(-50%) scale(0.98); }
+            100% { opacity: 0.7; transform: translateX(-50%) scale(1.02); }
+        }
+
+        /* --- SECTION COMMONS --- */
+        section {
+            padding: 100px 8%;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-tag {
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--accent-gold);
+        }
+
+        /* --- BLOG SECTION --- */
+        .blog-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 280px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 12px 20px 12px 45px;
+            border-radius: 25px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            border-color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-gold);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .blog-img-wrapper {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .blog-card:hover .blog-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .blog-cat-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(11, 14, 20, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-gold);
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .blog-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .blog-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+            transition: 0.3s;
+        }
+
+        .blog-card:hover .blog-title {
+            color: var(--accent-gold);
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-footer {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* --- CODE PLAYGROUND / TERMINAL --- */
+        .code-section {
+            background: #080B10;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .terminal-window {
+            background: #0F141C;
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .terminal-header {
+            background: #18202C;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #FF5F56; }
+        .dot-yellow { background: #FFBD2E; }
+        .dot-green { background: #27C93F; }
+
+        .terminal-title {
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .terminal-body {
+            padding: 25px;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            color: #A9B7C6;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .code-keyword { color: #CC7832; font-weight: bold; }
+        .code-string { color: #6A8759; }
+        .code-func { color: #FFC66D; }
+        .code-comment { color: #808080; font-style: italic; }
+
+        /* --- SHOWCASE / PORTFOLIO --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 25px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .portfolio-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-5px);
+        }
+
+        .portfolio-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-family: var(--font-code);
+        }
+
+        /* --- CONTACT & FOOTER --- */
+        footer {
+            background: #06080C;
+            border-top: 1px solid var(--border-subtle);
+            padding: 80px 8% 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h2 {
+            font-family: var(--font-heading);
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 400px;
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
+
+        .footer-col h3 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* --- ARTICLE READER MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 8, 12, 0.92);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            transform: translateY(30px);
+            transition: 0.4s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .close-modal-btn:hover {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        .modal-body h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .modal-body p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .modal-body p::first-letter {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            float: left;
+            line-height: 1;
+            padding-right: 12px;
+            color: var(--accent-gold);
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-gold);
+            color: var(--text-primary);
+            padding: 14px 24px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 3000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 140px;
+            }
+            .hero-actions {
+                justify-content: center;
+            }
+            .hero-avatar-wrapper {
+                order: -1;
+            }
+            .avatar-frame {
+                width: 260px;
+                height: 340px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            nav {
+                display: none; /* Thu gọn trên mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / NAVIGATION -->
+    <header>
+        <a href="#" class="logo">
+            <div class="logo-badge">Q</div>
+            <div class="logo-text">
+                <h1>QUÂN</h1>
+                <span>DEV & DESIGN JOURNAL</span>
+            </div>
+        </a>
+
+        <nav>
+            <ul>
+                <li><a href="#about" class="active">Về Tôi</a></li>
+                <li><a href="#blog">Bài Viết</a></li>
+                <li><a href="#code">Terminal</a></li>
+                <li><a href="#showcase">Dự Án</a></li>
+            </ul>
+        </nav>
+
+        <a href="#contact" class="nav-btn" onclick="copyEmail()">LIÊN HỆ QUÂN</a>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="about">
+        <div class="hero-text">
+            <div class="hero-tag">
+                <i class="fa-solid fa-gem"></i> Software Architect & Designer
+            </div>
+            <h1 class="hero-title">Kiến Tạo Không Gian Số Lịch Lãm & Đột Phá</h1>
+            <p class="hero-subtitle">"Biến những thuật toán phức tạp thành trải nghiệm tinh tế."</p>
+            <p class="hero-desc">
+                Chào bạn, tôi là <strong>Quân</strong>. Tôi theo đuổi sự hoàn hảo trong từng dòng code và tính nghệ thuật trong giao diện. Mục tiêu của tôi là tạo nên các sản phẩm web không chỉ vận hành xuất sắc mà còn mang giá trị thẩm mỹ vượt thời gian.
+            </p>
+            <div class="hero-actions">
+                <a href="#blog" class="btn-primary">
+                    Khám Phá Bài Viết <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#showcase" class="btn-secondary">
+                    Xem Dự Án
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-avatar-wrapper">
+            <div class="avatar-glow"></div>
+            <div class="avatar-frame">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2Ne_PpAsPL4JDqrIP2SGu0g-o3NAhAPM80DkfzLA1ZA&s=10" alt="Chân dung Quân">
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG ARTICLES SECTION -->
+    <section id="blog">
+        <div class="section-header">
+            <span class="section-tag">Góc Nhìn & Triết Lý</span>
+            <h2 class="section-title">Nhật Ký Lập Trình & Thiết Kế</h2>
+        </div>
+
+        <!-- Controls: Search & Category Filters -->
+        <div class="blog-controls">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm bài viết..." onkeyup="filterArticles()">
+            </div>
+
+            <div class="category-filters">
+                <button class="filter-btn active" onclick="filterCategory('all')">Tất Cả</button>
+                <button class="filter-btn" onclick="filterCategory('design')">UI/UX Design</button>
+                <button class="filter-btn" onclick="filterCategory('dev')">Web Dev</button>
+                <button class="filter-btn" onclick="filterCategory('architecture')">Architecture</button>
+            </div>
+        </div>
+
+        <!-- Blog Cards Grid -->
+        <div class="blog-grid" id="blogGrid">
+
+            <!-- Card 1 -->
+            <article class="blog-card" data-category="design" onclick="openModal(1)">
+                <div class="blog-img-wrapper">
+                    <span class="blog-cat-badge">UI/UX Design</span>
+                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600" alt="Nghệ thuật Typography">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="fa-regular fa-calendar"></i> 24 Th09, 2026</span>
+                        <span><i class="fa-regular fa-clock"></i> 5 phút đọc</span>
+                    </div>
+                    <h3 class="blog-title">Nghệ Thuật Typography Trong Web Design Phong Cách Lịch Lãm</h3>
+                    <p class="blog-excerpt">
+                        Sự kết hợp hoàn hảo giữa phông chữ Serif cổ điển và Sans-Serif hiện đại mang lại cảm giác sang trọng, thu hút người đọc ngay từ cái nhìn đầu tiên.
+                    </p>
+                    <div class="blog-footer">
+                        <span>Đọc tiếp bài viết</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="blog-card" data-category="dev" onclick="openModal(2)">
+                <div class="blog-img-wrapper">
+                    <span class="blog-cat-badge">Web Dev</span>
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600" alt="Clean Code">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="fa-regular fa-calendar"></i> 18 Th09, 2026</span>
+                        <span><i class="fa-regular fa-clock"></i> 8 phút đọc</span>
+                    </div>
+                    <h3 class="blog-title">Viết Clean Code Như May Đo Một Bộ Suit Tuxedo</h3>
+                    <p class="blog-excerpt">
+                        Một dòng code xuất sắc không chỉ dừng lại ở việc chạy đúng. Nó cần sự chỉn chu trong cấu trúc, dễ đọc và tinh tế như từng đường kim mũi chỉ.
+                    </p>
+                    <div class="blog-footer">
+                        <span>Đọc tiếp bài viết</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="blog-card" data-category="architecture" onclick="openModal(3)">
+                <div class="blog-img-wrapper">
+                    <span class="blog-cat-badge">Architecture</span>
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600" alt="Microservices">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="fa-regular fa-calendar"></i> 10 Th09, 2026</span>
+                        <span><i class="fa-regular fa-clock"></i> 10 phút đọc</span>
+                    </div>
+                    <h3 class="blog-title">Tối Ưu Hóa Hiệu Năng Hệ Thống Web Tải Trọng Cao</h3>
+                    <p class="blog-excerpt">
+                        Bí quyết giữ cho website vận hành mượt mà với độ trễ dưới 50ms thông qua chiến lược Caching thông minh và kiến trúc Microservices.
+                    </p>
+                    <div class="blog-footer">
+                        <span>Đọc tiếp bài viết</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- TERMINAL / CODE SHOWCASE SECTION -->
+    <section class="code-section" id="code">
+        <div class="section-header">
+            <span class="section-tag">Logic & Precision</span>
+            <h2 class="section-title">Triết Lý Lập Trình Của Quân</h2>
+        </div>
+
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                </div>
+                <div class="terminal-title">quan_philosophy.js — Visual Studio Code</div>
+                <div><i class="fa-solid fa-code" style="color: var(--accent-gold);"></i></div>
+            </div>
+            <div class="terminal-body">
+<pre><code><span class="code-comment">// Triết lý thiết kế và phát triển phần mềm của Quân</span>
+<span class="code-keyword">const</span> <span class="code-func">Developer</span> = {
+    name: <span class="code-string">"Quân"</span>,
+    role: <span class="code-string">"Software Architect & Web Designer"</span>,
+    standards: [<span class="code-string">"Clean Code"</span>, <span class="code-string">"Luxurious UI"</span>, <span class="code-string">"High Performance"</span>],
+    
+    <span class="code-func">craftWebsite</span>: <span class="code-keyword">function</span>(project) {
+        <span class="code-keyword">let</span> elegance = <span class="code-keyword">true</span>;
+        <span class="code-keyword">let</span> efficiency = <span class="code-string">"100%"</span>;
+        
+        <span class="code-keyword">return</span> `Tạo nên trải nghiệm đỉnh cao cho ${project.name}`;
+    }
+};
+
+console.log(<span class="code-string">"\"Simplicity is the ultimate sophistication.\""</span>);</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOWCASE / PORTFOLIO SECTION -->
+    <section id="showcase">
+        <div class="section-header">
+            <span class="section-tag">Tác Phẩm Tiêu Biểu</span>
+            <h2 class="section-title">Dự Án Đã Thực Hiện</h2>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <div class="portfolio-icon"><i class="fa-solid fa-gem"></i></div>
+                <h3 class="portfolio-title">Aura Luxury Watch Platform</h3>
+                <p class="portfolio-desc">Trang thương mại điện tử đồng hồ xa xỉ với trải nghiệm 3D xem sản phẩm tương tác cao cấp.</p>
+                <div class="portfolio-tags">
+                    <span class="tag">Next.js</span>
+                    <span class="tag">Three.js</span>
+                    <span class="tag">Tailwind</span>
+                </div>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="portfolio-icon"><i class="fa-solid fa-building-columns"></i></div>
+                <h3 class="portfolio-title">Royal Horizon Boutique Hotel</h3>
+                <p class="portfolio-desc">Hệ thống đặt phòng trực tuyến dành cho chuỗi khách sạn boutique 5 sao chuẩn quốc tế.</p>
+                <div class="portfolio-tags">
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">GraphQL</span>
+                </div>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="portfolio-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3 class="portfolio-title">Fintech Wealth Dashboard</h3>
+                <p class="portfolio-desc">Bảng điều khiển quản lý tài sản cá nhân dành cho các nhà đầu tư VIP với biểu đồ thời gian thực.</p>
+                <div class="portfolio-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">D3.js</span>
+                    <span class="tag">Python API</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>QUÂN JOURNAL</h2>
+                <p>Nơi chia sẻ góc nhìn về lập trình web, tư duy kiến trúc phần mềm và nghệ thuật thiết kế giao diện cao cấp.</p>
+                <div class="social-links">
+                    <a href="#" class="social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="social-btn" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="social-btn" title="Email" onclick="copyEmail()"><i class="fa-regular fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Danh Mục</h3>
+                <ul>
+                    <li><a href="#about">Về Tôi</a></li>
+                    <li><a href="#blog">Bài Viết Mới</a></li>
+                    <li><a href="#code">Triết Lý Lập Trình</a></li>
+                    <li><a href="#showcase">Dự Án Thực Hiện</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liên Hệ Studio</h3>
+                <ul>
+                    <li><a href="#" onclick="copyEmail()">Email: 6651071057@st.utc2.edu.vn</a></li>
+                    <li><a href="#">Địa chỉ: Thủ Đức, TP. Hồ Chí Minh</a></li>
+                    <li><a href="#">Giờ làm việc: 07:30 - 17:00</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2026 <strong>QUÂN</strong>. All rights reserved. Designed with precision & elegance.
+        </div>
+    </footer>
+
+    <!-- ARTICLE READER MODAL -->
+    <div class="modal-overlay" id="articleModal">
+        <div class="modal-container">
+            <button class="close-modal-btn" onclick="closeModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Nội dung bài viết sẽ được load động bằng JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check" style="color: var(--accent-gold);"></i>
+        <span id="toastMsg">Đã sao chép địa chỉ Email của Quân!</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DỮ LIỆU BÀI VIẾT POPUP ---
+        const articlesData = {
+            1: {
+                title: "Nghệ Thuật Typography Trong Web Design Phong Cách Lịch Lãm",
+                content: `
+                    <p>Typography không đơn thuần là việc chọn phông chữ. Trong thiết kế giao diện cao cấp, phông chữ chính là giọng nói của thương hiệu. Việc kết hợp giữa Serif cổ điển (như Cinzel, Cormorant Garamond) với Sans-serif hiện đại tạo nên nhịp điệu thị giác ấn tượng.</p>
+                    <p>Khi thiết kế cho các thương hiệu hạng sang, khoảng cách giữa các chữ cái (letter-spacing) và chiều cao dòng (line-height) đóng vai trò quyết định cảm giác thoáng đãng và sang trọng của trang web.</p>
+                `
+            },
+            2: {
+                title: "Viết Clean Code Như May Đo Một Bộ Suit Tuxedo",
+                content: `
+                    <p>Cũng giống như một bộ Tuxedo may đo hoàn hảo, mã nguồn chuẩn mực đòi hỏi sự chỉn chu đến từng chi tiết nhỏ nhất. Đặt tên biến rõ ràng, tách biệt các hàm xử lý đơn nhiệm và tối ưu hóa logic chính là chìa khóa.</p>
+                    <p>Clean code giúp đồng nghiệp đọc hiểu mã của bạn dễ dàng như thưởng thức một cuốn sách hay, đồng thời giúp hệ thống dễ dàng mở rộng trong tương lai.</p>
+                `
+            },
+            3: {
+                title: "Tối Ưu Hóa Hiệu Năng Hệ Thống Web Tải Trọng Cao",
+                content: `
+                    <p>Hiệu năng là yếu tố sống còn của một trang web chuyên nghiệp. Sự kết hợp giữa Server-side Rendering (SSR), Caching nhiều tầng tại CDN và tối ưu tài nguyên hình ảnh giúp giữ trải nghiệm người dùng luôn ở mức tối đa.</p>
+                    <p>Đừng bao giờ đánh đổi tốc độ lấy sự rườm rà không cần thiết. Đơn giản và tối ưu chính là đỉnh cao của kĩ thuật.</p>
+                `
+            }
+        };
+
+        // --- MỞ & ĐÓNG MODAL ĐỌC BÀI VIẾT ---
+        function openModal(id) {
+            const article = articlesData[id];
+            if(article) {
+                document.getElementById('modalBody').innerHTML = `
+                    <h2>${article.title}</h2>
+                    ${article.content}
+                `;
+                document.getElementById('articleModal').classList.add('active');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('articleModal').classList.remove('active');
+        }
+
+        // Đóng Modal khi click ngoài khung
+        document.getElementById('articleModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // --- TÌM KIẾM BÀI VIẾT REALTIME ---
+        function filterArticles() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.blog-card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('.blog-title').innerText.toLowerCase();
+                const excerpt = card.querySelector('.blog-excerpt').innerText.toLowerCase();
+
+                if (title.includes(query) || excerpt.includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        // --- LỌC BÀI VIẾT THEO DANH MỤC ---
+        function filterCategory(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.blog-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        // --- SAO CHÉP EMAIL & TOAST NOTIFICATION ---
+        function copyEmail() {
+            const email = "quan.developer@studio.vn";
+            navigator.clipboard.writeText(email).then(() => {
+                showToast("Đã sao chép Email: " + email);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
